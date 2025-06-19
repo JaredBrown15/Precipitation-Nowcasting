@@ -8,3 +8,16 @@ You can find the thesis publication at https://etd.ohiolink.edu/acprod/odb_etd/e
 
 Written in python using the SEVIR dataset. Information available here: https://github.com/MIT-AI-Accelerator/neurips-2020-sevir
 Data is not included in this repository and must be included separately. This repo was not used during the thesis (which would have been a GREAT IDEA), but is housing the finalized code.
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+IMPORTANT CODE FILES: If memory serves me correctly, these are the files I used for final analysis. Files are disorganized here, but I have learned from this mistake
+
+Thesis/Code/Finalized Code/MASTER SCRIPT - Following Design of Experiments.ipynb
+Thesis/Code/Finalized Code/Spear.py
+Thesis/Code/Finalized Code/master_script_helper_functions.py
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Summary of methodology: See Precipitation-Nowcasting/Thesis-Defense.pptx for more details
+
+Ellipses were fit to storm radar signatures using a process similar to PCA. Radar images were binarized, then the covariance matrix was calculated. Eigenvectors/eigenvalues corresponded to ellipse axis directions/magnitudes respectively.
+1st order backward differencing was used to calculate storm (ellipse) velocity. These features were then normalized and passed into an LSTM architecture to predict ellipse location, size, and speed in the future. 
