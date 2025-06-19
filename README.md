@@ -7,7 +7,9 @@ This repository contains code and resources used to complete my master's thesis 
 
 You can find the thesis publication at https://etd.ohiolink.edu/acprod/odb_etd/etd/r/1501/10?clear=10&p10_accession_num=wright1748891568013252
 
-Written in python using the SEVIR dataset. Information on SEVIR available here: https://github.com/MIT-AI-Accelerator/neurips-2020-sevir
+Data from SEVIR. Information available here: https://github.com/MIT-AI-Accelerator/neurips-2020-sevir
+
+Written primarily in Jupyter Notebook with python. Does not include dependencies such as Numpy, Pandas, CUDA, etc...
 
 ## IMPORTANT CODE FILES
 If memory serves me correctly, these are the files I used for final analysis. Files are disorganized here, but I have learned from this mistake
