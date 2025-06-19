@@ -1,0 +1,85 @@
+﻿Local Here(
+	(table1 = New Table( "Untitled 5",
+		Add Rows( 17 ),
+		New Column( "maskThreshold",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[63, 94, 88, 75, 69, 56, 50, 119, 100, 81, 113, 106, 125, 131, 144,
+				150, 138]
+			)
+		),
+		New Column( "nSTD",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[1.1, 1.5, 1, 2.1, 1.6, 2.8, 2.3, 1.4, 2, 2.6, 3, 2.5, 1.9, 2.4, 1.3,
+				1.8, 2.9]
+			)
+		),
+		New Column( "input_length",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[11, 4, 20, 2, 15, 7, 17, 1, 13, 24, 5, 21, 23, 10, 18, 8, 14]
+			)
+		),
+		New Column( "horizon_length",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values( [6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6] )
+		),
+		New Column( "first8r2",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[0.725789049, 0.713181078, 0.712749892, 0.710399979, 0.70492357,
+				0.700364712, 0.697090256, 0.692136651, 0.688833085, 0.684738851,
+				0.675699067, 0.671745816, 0.659321442, 0.654052758, 0.639154238,
+				0.630551544, 0.62300534]
+			)
+		),
+		New Column( "globalr2",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[0.48585124, 0.478710198, 0.435370636, 0.463272244, 0.471392599,
+				0.457745817, 0.474376011, 0.42300092, 0.462756902, 0.448891276,
+				0.426392317, 0.426617372, 0.372191906, 0.408507687, 0.413818002,
+				0.387899238, 0.396841806]
+			)
+		),
+		Set Row States( [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0] )
+	)) << Run Formulas;
+	table1 << Fit Model(
+		Y( :first8r2 ),
+		Effects(
+			:maskThreshold, :nSTD, :input_length, :maskThreshold * :maskThreshold
+		),
+		Personality( "Standard Least Squares" ),
+		Emphasis( "Effect Leverage" ),
+		Run(
+			:first8r2 << {Summary of Fit( 1 ), Analysis of Variance( 1 ),
+			Parameter Estimates( 1 ), Lack of Fit( 0 ), Scaled Estimates( 0 ),
+			Plot Actual by Predicted( 1 ), Plot Regression( 0 ),
+			Plot Residual by Predicted( 1 ), Plot Studentized Residuals( 0 ),
+			Plot Effect Leverage( 1 ), Plot Residual by Normal Quantiles( 0 ),
+			Box Cox Y Transformation( 0 ), Profiler(
+				1,
+				Confidence Intervals( 1 ),
+				Desirability Functions( 1 ),
+				Term Value(
+					:maskThreshold( 65.3971066453011, Lock( 0 ), Show( 1 ) ),
+					:nSTD( 1, Lock( 0 ), Show( 1 ) ),
+					:input_length( 1, Lock( 0 ), Show( 1 ) )
+				)
+			)}
+		)
+	);
+)

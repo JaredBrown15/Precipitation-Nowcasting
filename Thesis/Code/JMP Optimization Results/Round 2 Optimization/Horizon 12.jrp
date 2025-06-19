@@ -1,0 +1,78 @@
+﻿Local Here(
+	(table1 = New Table( "Untitled 3",
+		Add Rows( 17 ),
+		New Column( "maskThreshold",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[46, 17, 24, 32, 96, 125, 82, 75, 68, 89, 118, 111, 103, 39, 10, 53,
+				60]
+			)
+		),
+		New Column( "nSTD",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[1.5, 0.5, 0.7, 1, 1.4, 0.5, 0.4, 1.3, 0.8, 0.1, 1.2, 0.9, 0.6, 0.2,
+				1.1, 1.2, 0.3]
+			)
+		),
+		New Column( "input_length",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values( [12, 13, 2, 5, 7, 6, 15, 12, 8, 4, 3, 14, 11, 9, 10, 1, 5] )
+		),
+		New Column( "horizon_length",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12]
+			)
+		),
+		New Column( "first8r2",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[0.596103123, 0.617337722, 0.608099467, 0.603612667, 0.561864278,
+				0.539917234, 0.587732679, 0.583565941, 0.59092232, 0.593910891,
+				0.535005918, 0.545595092, 0.566095239, 0.633755997, 0.605594909,
+				0.580738181, 0.606846392]
+			)
+		)
+	)) << Run Formulas;
+	table1 << Fit Group(
+		Fit Model(
+			Y( :first8r2 ),
+			Effects(
+				:maskThreshold, :nSTD, :input_length,
+				:maskThreshold * :maskThreshold, :maskThreshold * :nSTD,
+				:nSTD * :nSTD, :input_length * :input_length
+			),
+			Personality( "Standard Least Squares" ),
+			Emphasis( "Minimal Report" ),
+			Run(
+				:first8r2 << {Summary of Fit( 1 ), Analysis of Variance( 1 ),
+				Parameter Estimates( 1 ), Lack of Fit( 0 ), Scaled Estimates( 0 ),
+				Plot Actual by Predicted( 0 ), Plot Regression( 0 ),
+				Plot Residual by Predicted( 0 ), Plot Studentized Residuals( 0 ),
+				Plot Effect Leverage( 0 ), Plot Residual by Normal Quantiles( 0 ),
+				Box Cox Y Transformation( 0 )}
+			)
+		),
+		<<{Profiler(
+			1,
+			Confidence Intervals( 1 ),
+			Desirability Functions( 1 ),
+			Term Value(
+				:maskThreshold( 10, Lock( 0 ), Show( 1 ) ),
+				:nSTD( 0.1, Lock( 0 ), Show( 1 ) ),
+				:input_length( 9.21277652190787, Lock( 0 ), Show( 1 ) )
+			)
+		)}
+	);
+)

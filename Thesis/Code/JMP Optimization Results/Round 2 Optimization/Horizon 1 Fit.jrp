@@ -1,0 +1,70 @@
+﻿Local Here(
+	(table1 = New Table( "Untitled",
+		Add Rows( 17 ),
+		New Column( "maskThreshold",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[46, 17, 24, 32, 96, 125, 82, 75, 68, 89, 118, 111, 103, 39, 10, 53,
+				60]
+			)
+		),
+		New Column( "nSTD",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[1.5, 0.5, 0.7, 1, 1.4, 0.5, 0.4, 1.3, 0.8, 0.1, 1.2, 0.9, 0.6, 0.2,
+				1.1, 1.2, 0.3]
+			)
+		),
+		New Column( "input_length",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values( [12, 13, 2, 5, 7, 6, 15, 12, 8, 4, 3, 14, 11, 9, 10, 1, 5] )
+		),
+		New Column( "horizon_length",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values( [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1] )
+		),
+		New Column( "first8r2",
+			Numeric,
+			"Continuous",
+			Format( "Best", 12 ),
+			Set Values(
+				[0.765629107, 0.765797378, 0.833560762, 0.814709117, 0.804793327,
+				0.821450664, 0.747638819, 0.759657672, 0.810629462, 0.868478872,
+				0.820502034, 0.74248403, 0.793992573, 0.8384293, 0.790069878,
+				0.811811128, 0.845904203]
+			)
+		)
+	)) << Run Formulas;
+	table1 << Fit Model(
+		Y( :first8r2 ),
+		Effects(
+			:nSTD, :input_length, :nSTD * :nSTD, :input_length * :input_length
+		),
+		Personality( "Standard Least Squares" ),
+		Emphasis( "Effect Leverage" ),
+		Run(
+			:first8r2 << {Summary of Fit( 1 ), Analysis of Variance( 1 ),
+			Parameter Estimates( 1 ), Lack of Fit( 0 ), Scaled Estimates( 0 ),
+			Plot Actual by Predicted( 1 ), Plot Regression( 0 ),
+			Plot Residual by Predicted( 1 ), Plot Studentized Residuals( 0 ),
+			Plot Effect Leverage( 1 ), Plot Residual by Normal Quantiles( 0 ),
+			Box Cox Y Transformation( 0 ), Profiler(
+				1,
+				Confidence Intervals( 1 ),
+				Desirability Functions( 1 ),
+				Term Value(
+					:nSTD( 0.1, Lock( 0 ), Show( 1 ) ),
+					:input_length( 2.90236302163782, Lock( 0 ), Show( 1 ) )
+				)
+			)}
+		)
+	);
+)
